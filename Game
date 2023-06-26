@@ -1,0 +1,67 @@
+"""Number guessing game inspired by Alice in Borderland S2 Japanese Thriller. The game starts by chosing the number
+ of players from 2 to 10, it then assigns each player
+ a default score of 0, each player must choose a number from 0-100,
+ the average of all chosen numbers are found and mulriplied by 0.8, the player whos number is closest to the results earns a point.
+5 points are required to win the game"""
+
+import statistics
+import math
+name_list = []
+number_of_players = ''
+total_number = 0
+counter = 1
+try:
+    while number_of_players not in range(2,11):
+        number_of_players = int(input('Choose the number of players (2-10): '))
+except ValueError:
+    print('Choose AN INTEGER Value')
+    while number_of_players not in range(2, 11):
+        number_of_players = int(input('Choose the number of players (0-10): '))
+
+while len(name_list) < number_of_players:
+    name_list.append(input(f'Player {counter}, choose a name: '))
+    counter += 1
+players_points = [ 0 for x in range(len(name_list)) ]
+print(f'Current Score:\n{dict(zip(name_list,players_points))}')
+
+while 5 not in players_points:
+
+    chosen_number = []
+    product_number = []
+    average = 0
+    for _ in range(len(name_list)):
+        chosen_number.append(int(input(f'Player {_+1}, {name_list[_]}, choose a number 0-100: ')))
+    average = statistics.mean(chosen_number)*0.8
+    for _ in range(len(name_list)):
+        product_number.append(abs(chosen_number[_]-average))
+    win = product_number.index(min(product_number))
+    print(f'\nThe product number is {average}\n')
+    print(f'The player with the closest value is Player {win+1}, {name_list[win]}, whose number is {chosen_number[win]}')
+    players_points[win] += 1
+    print(f'\nCurrent score:\n'
+        f'{dict(zip(name_list,players_points))}'
+        f'\n\n\n\n')
+
+winner_index = players_points.index(5)
+print(f'Player {winner_index+1}, {name_list[winner_index]} wins. Congratulations ')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
